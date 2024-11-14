@@ -15,8 +15,13 @@ pub fn preprocess_images_from_path<P: AsRef<Path>>(image_paths: &[P]) -> Result<
     process_images(&image_data)
 }
 
-pub fn preprocess_images_from_memory(image_data: &[DynamicImage]) -> Result<Array4<f32>> {
-    process_images(image_data)
+pub fn preprocess_images_from_memory(image_data: &[&[u8]]) -> Result<Array4<f32>> {
+    let mut image = Vec::new();
+    for data in image_data {
+        let img = image::load_from_memory(data)?;
+        image.push(img);
+    }
+    process_images(&image)
 }
 
 fn keepratio_resize(img: &RgbImage) -> RgbImage {
