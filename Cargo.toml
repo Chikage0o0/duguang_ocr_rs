@@ -1,0 +1,17 @@
+[package]
+name = "duguang_ocr_rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.93"
+image = "0.25.5"
+ndarray = "0.16.1"
+ort = { version = "=2.0.0-rc.8" }
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = 3
+panic = "abort"
+strip = true
